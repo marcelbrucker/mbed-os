@@ -3,7 +3,7 @@
 
 # This is the boilerplate for Mbed OS
 
-cmake_minimum_required(VERSION 3.18.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.19.0 FATAL_ERROR)
 
 # Using relative paths behavior
 if(POLICY CMP0076)
@@ -200,3 +200,12 @@ function(mbed_generate_executable target)
     mbed_generate_bin_hex(${target})
     mbed_generate_map_file(${target})
 endfunction()
+
+# Ninja requires to be forced for response files
+if ("${CMAKE_GENERATOR}" MATCHES "Ninja")
+    # known issue ARMClang and Ninja with response files for windows
+    # https://gitlab.kitware.com/cmake/cmake/-/issues/21093
+    if(NOT (CMAKE_HOST_SYSTEM_NAME MATCHES "Windows" AND CMAKE_CXX_COMPILER_ID MATCHES "ARMClang"))
+        set(CMAKE_NINJA_FORCE_RESPONSE_FILE 1 CACHE INTERNAL "")
+    endif()
+endif()
