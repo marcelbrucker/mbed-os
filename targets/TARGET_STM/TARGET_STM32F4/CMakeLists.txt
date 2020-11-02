@@ -1,6 +1,8 @@
 # Copyright (c) 2020 ARM Limited. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 
+add_subdirectory(STM32Cube_FW)
+
 if("STM32F401xE" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_STM32F401xE)
 elseif("STM32F439xI" IN_LIST MBED_TARGET_LABELS)
@@ -18,13 +20,7 @@ target_sources(mbed-core
         spi_api.c
 )
 
-add_subdirectory(STM32Cube_FW)
-
 target_include_directories(mbed-core
     INTERFACE
         ${CMAKE_CURRENT_SOURCE_DIR}
-        ${CMAKE_CURRENT_SOURCE_DIR}/STM32Cube_FW
-        ${CMAKE_CURRENT_SOURCE_DIR}/STM32Cube_FW/CMSIS
-        ${CMAKE_CURRENT_SOURCE_DIR}/STM32Cube_FW/STM32F4xx_HAL_Driver
-        ${CMAKE_CURRENT_SOURCE_DIR}/STM32Cube_FW/STM32F4xx_HAL_Driver/Legacy
 )
